@@ -9,11 +9,11 @@ import Bill from "./Expenses";
 function App() {
   return (
     <Router>
-      <nav className="p-4  bg-slate-900 text-white font-semibold text-2xl flex justify-around ">
-        <Link to="/" className="hover:text-black transition-all">Home</Link>
-        <Link to="/bills" className="hover:text-black transition-all">Bills</Link>
-        <Link to="/history" className="hover:text-black transition-all">History</Link>
-        <Link to="/income" className="hover:text-black transition-all">Income</Link>
+      <nav className="p-4  bg-slate-900 text-white font-semibold sm:text-2xl text-xl flex justify-around ">
+        <Link to="/" >Home</Link>
+        <Link to="/bills" >Bills</Link>
+        <Link to="/history" >History</Link>
+        <Link to="/income" >Income</Link>
       </nav>
       <div className="p-5">
         <Routes>
