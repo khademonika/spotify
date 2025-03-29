@@ -4,4 +4,9 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
+  server: {
+    mimeTypes: {
+      'application/javascript': ['js', 'jsx'],
+      'text/javascript': ['js', 'jsx']
+    }}
 })
