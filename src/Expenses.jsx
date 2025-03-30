@@ -1,38 +1,71 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BillContext } from "./BillContext";
-import { FiDelete } from "react-icons/fi";
-import { MdDelete, MdDeleteForever } from "react-icons/md";
 
-const Bill = () => {
-  const {addbill,handleDelete, bills, togglePaid } = useContext(BillContext);
-  // const handleDelete = (id)=>(bills.filter((__,i) =>{id !== i} ) )
-  // console.log(bills);
-  
-  console.log(handleDelete);
+const Expenses = () => {
+  const { expenses = [], addExpense } = useContext(BillContext);
+  const [expense, setExpense] = useState({ name: "", amount: "", date: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!expense.name || !expense.amount || !expense.date) return;
+
+    const newExpense = { 
+      ...expense, 
+      id: Date.now(), 
+      amount: Number(expense.amount) 
+    };
+
+    addExpense(newExpense);
+    setExpense({ name: "", amount: "", date: "" });
+  };
+
+  const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  console.log("Expenses from context:", expenses);
   return (
     <div className="p-5">
-      <h2 className="text-xl font-bold">Bills</h2>
-      {bills.length === 0 ? <p>No bills added</p> : null}
-      {bills.map((bill, id) => (
-        <div key={bill.id} className="border p-3 my-2">
-          <p>
-            {bill.name} - ₹{bill.amount} ({bill.paid ? "Paid ✅" : "Unpaid ❌"})
-          </p>
-          <button
-            onClick={() => togglePaid(bill.id)}
-            className="bg-green-500 text-white px-3 py-1"
-          >
-            Mark as {bill.paid ? "Unpaid" : "Paid"}
-            
+      <h2 className="text-xl font-bold">Add Shop Expenses</h2>
+      <form onSubmit={handleSubmit} className="p-5 border shadow-md">
+        <input
+          type="text"
+          placeholder="Expense Name"
+          value={expense.name}
+          onChange={(e) => setExpense({ ...expense, name: e.target.value })}
+          required
+          className="border p-2 m-2"
+        />
+        <input
+          type="number"
+          placeholder="Amount"
+          value={expense.amount}
+          onChange={(e) => setExpense({ ...expense, amount: e.target.value })}
+          required
+          className="border p-2 m-2"
+        />
+        <input
+          type="date"
+          value={expense.date}
+          onChange={(e) => setExpense({ ...expense, date: e.target.value })}
+          required
+          className="border p-2 m-2"
+        />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+          Add Expense
+        </button>
+      </form>
 
-          </button>
-          <button onClick={()=>handleDelete(id)}><MdDelete className="text-4xl relative top-3 left-4"/></button>
-          {
-          }
-        </div>
-      ))}
+      <h2 className="text-xl font-bold mt-5">Total Expenses: ₹{totalExpenses}</h2>
+
+      {expenses.length === 0 ? <p>No expenses recorded.</p> : (
+        <ul>
+          {expenses.map((exp) => (
+            <li key={exp.id}>
+              {exp.name}: ₹{exp.amount} (Date: {exp.date})
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
-export default Bill;
+export default Expenses;

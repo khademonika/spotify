@@ -8,8 +8,14 @@ const AddBill = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!bill.name || !bill.amount) return;
+    const newBill = { 
+      ...bill, 
+      id: Date.now(), 
+      time: new Date().toLocaleString()  // Store the current time
+    };
+  
 
-    addBill({ ...bill, id: Date.now() }); // Add bill to context & local storage
+    addBill(newBill); // Add bill to context & local storage
     setBill({ name: "", amount: "", paid: false }); // Reset form
   };
  

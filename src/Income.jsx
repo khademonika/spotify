@@ -2,33 +2,31 @@ import React, { useContext } from "react";
 import { BillContext } from "./BillContext";
 
 const Income = () => {
-  const { bills } = useContext(BillContext);
+  const {bills = [], expenses = []  } = useContext(BillContext);
 
-  // Filter only paid bills
   const paidBills = bills.filter((bill) => bill.paid);
-  const unpaid = bills.filter((bill)=>bill.unpaid)
-  // Calculate total income from paid bills
   const totalIncome = paidBills.reduce((sum, bill) => sum + Number(bill.amount), 0);
+  const totalExpenses = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0);
+  const netIncome = totalIncome - totalExpenses;
 
   return (
     <div className="p-5">
-      <h2 className="text-xl font-bold">Income (Paid Bills)</h2>
+      <h2 className="text-xl font-bold">Financial Overview</h2>
+      
+      <h3 className="text-lg font-bold">Total Income: ₹{totalIncome}</h3>
+      <h3 className="text-lg font-bold">Total Expenses: ₹{totalExpenses}</h3>
+      <h3 className="text-lg font-bold">Net Income: ₹{netIncome}</h3>
 
-      {paidBills.length === 0 ? (
-        <p>No paid bills yet.</p>
-      ) : (
-        <>
-          <ul>
-            {paidBills.map((bill) => (
-              <li key={bill.id}>
-                {bill.name}: ₹{bill.amount}
-              </li>
-            ))}
-          </ul>
-          <h1 className="mt-3 text-lg font-bold">Total Income = ₹{totalIncome}</h1>
-        </>
+      <h2 className="mt-5 text-xl font-bold">Expense History</h2>
+      {expenses.length === 0 ? <p>No shop expenses yet.</p> : (
+        <ul>
+          {expenses.map((exp) => (
+            <li key={exp.id}>
+              {exp.name}: ₹{exp.amount} (Date: {exp.date})
+            </li>
+          ))}
+        </ul>
       )}
-    
     </div>
   );
 };

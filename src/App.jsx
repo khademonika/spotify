@@ -4,7 +4,8 @@ import Home from "./componets/Home";
 import AddBill from "./AddBill";
 import History from "./History";
 import Income from "./Income";
-import Bill from "./Expenses";
+import Bill from "./Bill";
+import Expenses from "./Expenses";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Link to="/bills" >Bills</Link>
         <Link to="/history" >History</Link>
         <Link to="/income" >Income</Link>
+        <Link to="/expenses">Expenses</Link>
       </nav>
       <div className="p-5">
         <Routes>
@@ -21,6 +23,7 @@ function App() {
           <Route path="/bills" element={<><AddBill /><Bill /></>} />
           <Route path="/history" element={<History />} />
           <Route path="/income" element={<Income />} />
+          <Route path="/expenses" element={<Expenses />} />
         </Routes>
       </div>
     </Router>
