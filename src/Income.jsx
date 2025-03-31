@@ -11,18 +11,19 @@ const Income = () => {
 
   return (
     <div className="p-5">
-      <h2 className="text-xl font-bold">Financial Overview</h2>
       
-      <h3 className="text-lg font-bold">Total Income: ₹{totalIncome}</h3>
-      <h3 className="text-lg font-bold">Total Expenses: ₹{totalExpenses}</h3>
-      <h3 className="text-lg font-bold">Net Income: ₹{netIncome}</h3>
+      <div className="grid grid-cols-3 gap-3.5">
+      <h3 className="text-lg font-semibold bg-green-700 border-2 border-green-800 pl-5 py-2 rounded-2xl text-white">Total Income: ₹{totalIncome}</h3>
+      <h3 className="text-lg font-semibold bg-red-900 border-2 border-green-800 pl-5 py-2 rounded-2xl text-white">Total Expenses: ₹{totalExpenses}</h3>
+      <h3 className="text-lg font-semibold bg-purple-900 border-2 border-green-800 pl-5 py-2 rounded-2xl text-white">Net Income: ₹{netIncome}</h3>
 
+      </div>
       <h2 className="mt-5 text-xl font-bold">Expense History</h2>
       {expenses.length === 0 ? <p>No shop expenses yet.</p> : (
         <ul>
           {expenses.map((exp) => (
-            <li key={exp.id}>
-              {exp.name}: ₹{exp.amount} (Date: {exp.date})
+            <li key={exp.id} className="p-2 rounded-2xl border-2 mb-2 flex justify-between">
+              {exp.name}: ₹{exp.amount} <p>Date: {exp.date}|| Time: {exp.time}</p>
             </li>
           ))}
         </ul>

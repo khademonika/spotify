@@ -1,18 +1,22 @@
 import React, { useContext, useState } from "react";
 import { BillContext } from "./BillContext";
+import { MdDelete } from "react-icons/md";
 
 const Expenses = () => {
-  const { expenses = [], addExpense } = useContext(BillContext);
+  const { expenses = [], addExpense, handleExpenseDelete } = useContext(BillContext);
   const [expense, setExpense] = useState({ name: "", amount: "", date: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!expense.name || !expense.amount || !expense.date) return;
 
+    const currentTime = new Date().toLocaleTimeString(); // ✅ Define current time
+
     const newExpense = { 
       ...expense, 
       id: Date.now(), 
-      amount: Number(expense.amount) 
+      amount: Number(expense.amount),
+      time: currentTime // ✅ Add time to the expense object
     };
 
     addExpense(newExpense);
@@ -20,7 +24,7 @@ const Expenses = () => {
   };
 
   const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  console.log("Expenses from context:", expenses);
+
   return (
     <div className="p-5">
       <h2 className="text-xl font-bold">Add Shop Expenses</h2>
@@ -55,11 +59,19 @@ const Expenses = () => {
 
       <h2 className="text-xl font-bold mt-5">Total Expenses: ₹{totalExpenses}</h2>
 
-      {expenses.length === 0 ? <p>No expenses recorded.</p> : (
+      {expenses.length === 0 ? (
+        <p>No expenses recorded.</p>
+      ) : (
         <ul>
-          {expenses.map((exp) => (
-            <li key={exp.id}>
-              {exp.name}: ₹{exp.amount} (Date: {exp.date})
+          {expenses.map((exp) => ( // ✅ Use `exp.id` instead of `id`
+            <li key={exp.id} className="text-lg px-3 flex justify-between  border-2 rounded-xl mb-2">
+           <div>
+           {exp.name}: ₹{exp.amount} <p className="text-sm "> <span className="font-semibold"> Date:</span> {exp.date} 
+           | <span className="font-semibold"> Time:</span> {exp.time}</p>
+           </div>
+              <button className="text-2xl" onClick={() => handleExpenseDelete(exp.id)}>
+                <MdDelete />
+              </button>
             </li>
           ))}
         </ul>
