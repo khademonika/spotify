@@ -4,10 +4,7 @@ import { FiDelete } from "react-icons/fi";
 import { MdDelete, MdDeleteForever } from "react-icons/md";
 
 const Bill = () => {
-  const {addbill,handleDelete, bills, togglePaid } = useContext(BillContext);
-  // const handleDelete = (id)=>(bills.filter((__,i) =>{id !== i} ) )
-  // console.log(bills);
-  
+  const {handleDelete, bills, togglePaid } = useContext(BillContext);
   return (
     <div className="p-5">
       <h2 className="text-xl font-bold">Bills</h2>
